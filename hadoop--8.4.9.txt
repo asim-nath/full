@@ -1,0 +1,45 @@
+$ sudo apt-get update
+$ sudo apt-get install default-jdk
+$ sudo addgroup hadoop
+$ sudo adduser --ingroup hadoop hduser
+$ sudo adduser hduser sudo
+$ sudo apt-get install ssh
+$ su hduser
+$ ssh-keygen -t rsa -P ""
+$ cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+$ ssh localhost
+$ wget https://archive.apache.org/dist/hadoop/core/hadoop-2.8.4/hadoop-2.8.4.tar.gz
+$ sudo tar xvzf hadoop-2.7.2.tar.gz
+$ sudo mkdir –p /usr/local/hadoop
+$ sudo mv hadoop-2.7.2 /usr/local/hadoop
+$ sudo chown –R hduser:hadoop /usr/local/hadoop
+//Hadoop Environmental variable setting – The following files will be modified
+1. ~/.bashrc
+2. /usr/local/hadoop/hadoop-2.7.2/etc/hadoop/hadoop-env.sh
+3. /usr/local/hadoop/hadoop-2.7.2/etc/hadoop/core-site.xml
+4. /usr/local/hadoop/hadoop-2.7.2/etc/hadoop/hdfs-site.xml
+5. /usr/local/hadoop/hadoop-2.7.2/etc/hadoop/yarn-site.xml
+6. /usr/local/hadoop/hadoop-2.7.2/etc/hadoop/mapred-site.xml.template
+$ sudo nano ~/.bashrc
+$ cd /usr/local/hadoop/hadoop-2.7.2/etc/hadoop/
+$ sudo nano hadoop-env.sh
+$ sudo mkdir –p /usr/local/hadoop_tmp/hdfs/namenode
+$ sudo mkdir –p /usr/local/hadoop_tmp/hdfs/datanode
+// Changing ownership to hadoop_tmp
+$ sudo chown –R hduser:hadoop /usr/local/hadoop_tmp
+$ sudo nano hdfs-site.xml
+$ sudo nano core-site.xml
+$ sudo nano yarn-site.xml
+$ cp /usr/local/hadoop/hadoop-2.7.2/etc/hadoop/mapred-site.xml.template
+/usr/local/hadoop/hadoop-2.7.2/etc/hadoop/mapred-site.xml
+$ sudo nano mapred-site.xml
+$ cd /usr/local/hadoop/hadoop-2.7.2/bin
+$ hadoop namenode -format
+$ cd /usr/local/hadoop/hadoop-2.7.2/sbin
+// Starting dfs services
+$ start-dfs.sh
+
+// Starting mapreduce services
+$ start-yarn.sh
+
+$ jps
